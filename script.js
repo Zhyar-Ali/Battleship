@@ -1,7 +1,19 @@
-export const calculate = function() {
-    const add = (x,y) => {
-        return x+y;
+export const Ship = function(lengthShip) {
+    const length = lengthShip;
+    let numHit = 0;
+    let sunk = false;
+
+    const hit = () => {
+        if(numHit<length) {
+            numHit++;
+        }
     };
 
-    return {add};
+    const isSunk = () => {
+        if(numHit === length) {
+            return true;
+        }
+    };
+
+    return {hit, isSunk};
 };
