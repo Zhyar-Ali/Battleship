@@ -49,4 +49,12 @@ describe("receiveAttack", () => {
         g.receiveAttack(1,1);
         expect(g.grid[0][0]).toMatch("X");
     });
+
+    test("get missed attack", () => {
+        const s = Ship(3);
+        const g = Gameboard();
+        g.placeShip(s,5,5,"horizontal");
+        g.receiveAttack(1,1);
+        expect(g.getMissedAttack()).toBe(1);
+    });
 });

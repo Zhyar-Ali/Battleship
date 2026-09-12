@@ -24,7 +24,8 @@ export const Ship = function( lengthShip) {
 export const Gameboard = function() {
     const grid = Array(10).fill().map(() => Array(10).fill(0));
     const arrShip = [];
-    let arrMissedCoor = [];
+    const arrMissedCoor = [];
+    let missedAttack = 0;
 
     const placeShip = (ship, x, y, orientation) => {
         let isValid = true;
@@ -70,12 +71,18 @@ export const Gameboard = function() {
             if(target === 0) {
                 grid[x-1][y-1] = "X"
                 arrMissedCoor.push([x,y]);
+                missedAttack++;
             }else{
                 console.log("Coordinate already hit");
             }
         }
     };
-    return {placeShip, receiveAttack, grid};
+
+    const getMissedAttack = () => {
+        return missedAttack;
+    };
+
+    return {placeShip, receiveAttack, getMissedAttack, grid};
 };
 let g = Gameboard();
 let s = Ship(3);
@@ -84,4 +91,4 @@ g.placeShip(s,5,5,"horizontal");
 g.receiveAttack(3,5);
 // g.placeShip(s2,4,3,"vertical");
 g.grid.forEach(value => console.log(value));
-//prints 0 when it should be x
+
