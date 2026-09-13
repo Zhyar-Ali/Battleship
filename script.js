@@ -1,4 +1,4 @@
-export const Ship = function( lengthShip) {
+export const Ship = function(lengthShip) {
     const length = lengthShip;
     let numHit = 0;
 
@@ -12,6 +12,7 @@ export const Ship = function( lengthShip) {
         if(numHit === length) {
             return true;
         }
+        return false;
     };
 
     const getHit = () => {
@@ -68,12 +69,21 @@ export const Gameboard = function() {
                 target.hit();
                 grid[x-1][y-1] = "X";
             }
-            if(target === 0) {
+            else if(target === 0) {
                 grid[x-1][y-1] = "X"
                 arrMissedCoor.push([x,y]);
                 missedAttack++;
+                return;
             }else{
                 console.log("Coordinate already hit");
+                return;
+            }
+
+            if( target.isSunk()) {
+                const index = arrShip.indexOf(target);
+                if(index !== -1) {
+                    arrShip.splice(index,1);
+                }
             }
         }
     };
@@ -82,13 +92,26 @@ export const Gameboard = function() {
         return missedAttack;
     };
 
-    return {placeShip, receiveAttack, getMissedAttack, grid};
+    const allShipSunk = () => {
+        if(arrShip.length === 0) {
+            return true;
+        }
+        return false;
+    };
+
+    return {placeShip, receiveAttack, getMissedAttack, allShipSunk, arrShip, grid};
 };
 let g = Gameboard();
 let s = Ship(3);
 // let s2 = Ship(3);
 g.placeShip(s,5,5,"horizontal");
-g.receiveAttack(3,5);
+console.log(g.arrShip);
+g.receiveAttack(5,5);
+g.receiveAttack(5,6);
+g.receiveAttack(5,7);
+console.log(g.arrShip);
+console.log(g.allShipSunk());
+
 // g.placeShip(s2,4,3,"vertical");
 g.grid.forEach(value => console.log(value));
-
+//2.5
