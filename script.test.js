@@ -57,4 +57,14 @@ describe("receiveAttack", () => {
         g.receiveAttack(1,1);
         expect(g.getMissedAttack()).toBe(1);
     });
+
+    test("ship sunk", () => {
+        const s = Ship(3);
+        const g = Gameboard();
+        g.placeShip(s,5,5,"horizontal");
+        g.receiveAttack(5,5);
+        g.receiveAttack(5,6);
+        g.receiveAttack(5,7);
+        expect(g.allShipSunk()).toBeTruthy();
+    });
 });
