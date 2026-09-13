@@ -17,6 +17,9 @@ const game = function() {
     let player = Player("human");
     let computer = Player("computer");
 
+    let currentPlayer = player;
+
+    //place ships for both players randomly
     placeAllShips(player);
     placeAllShips(computer);
 
@@ -32,13 +35,27 @@ const game = function() {
         }
     }
 
-    const test = () => {
-        player.gameBoard.arrShip.forEach(value =>console.log(value));
-        console.log("-----------");
-        computer.gameBoard.arrShip.forEach(value =>console.log(value));
+    const switchPlayer= () => {
+        if(currentPlayer === player) {
+            currentPlayer = computer;
+        }else{
+            currentPlayer = player;
+        }
     }
-    return{test}
-};
 
-let g = game();
-g.test();
+    const getWinner = () => {
+        if(player.gameBoard.allShipSunk()) {
+            return computer;
+        }
+        if(computer.gameBoard.allShipSunk()) {
+            return player;
+        }
+    }
+
+    // const test = () => {
+    //     player.gameBoard.arrShip.forEach(value =>console.log(value));
+    //     console.log("-----------");
+    //     computer.gameBoard.arrShip.forEach(value =>console.log(value));
+    // }
+    return{switchPlayer, getWinner};
+}
