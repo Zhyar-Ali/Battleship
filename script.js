@@ -99,19 +99,11 @@ export const Gameboard = function() {
         return false;
     };
 
-    return {placeShip, receiveAttack, getMissedAttack, allShipSunk, arrShip, grid};
+    return {placeShip, receiveAttack, getMissedAttack, allShipSunk, grid};
 };
-let g = Gameboard();
-let s = Ship(3);
-// let s2 = Ship(3);
-g.placeShip(s,5,5,"horizontal");
-console.log(g.arrShip);
-g.receiveAttack(5,5);
-g.receiveAttack(5,6);
-g.receiveAttack(5,7);
-console.log(g.arrShip);
-console.log(g.allShipSunk());
 
-// g.placeShip(s2,4,3,"vertical");
-g.grid.forEach(value => console.log(value));
-//2.5
+export const Player = function(typeOfPlayer) {
+    const type = typeOfPlayer;
+    const gameBoard = Gameboard();
+    return {type, gameBoard};
+};
