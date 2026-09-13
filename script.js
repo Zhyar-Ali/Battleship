@@ -75,11 +75,10 @@ export const Gameboard = function() {
                 missedAttack++;
                 return;
             }else{
-                console.log("Coordinate already hit");
-                return;
+                return -1;
             }
 
-            if( target.isSunk()) {
+            if(target.isSunk()) {
                 const index = arrShip.indexOf(target);
                 if(index !== -1) {
                     arrShip.splice(index,1);

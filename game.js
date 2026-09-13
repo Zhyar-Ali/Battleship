@@ -52,10 +52,33 @@ const game = function() {
         }
     }
 
-    // const test = () => {
-    //     player.gameBoard.arrShip.forEach(value =>console.log(value));
-    //     console.log("-----------");
-    //     computer.gameBoard.arrShip.forEach(value =>console.log(value));
-    // }
-    return{switchPlayer, getWinner};
+    const playerAttack = (x,y) => {
+        if(currentPlayer !== player) {
+            throw new Error("It's not the player's turn");
+        }
+        
+        if(computer.gameBoard.receiveAttack(x,y) === -1) {
+            console.log("Coordinate already hit\nGo Again");
+            return;
+        }
+        computer.gameBoard.receiveAttack(x,y);
+        switchPlayer();
+    }
+
+     const computerAttack = () => {
+        let x = getRandomNum.rand(1,11);
+        let y = getRandomNum.rand(1,11);
+        if(currentPlayer !== computer) {
+            throw new Error("It's not the computer's turn");
+        }
+        
+        if(player.gameBoard.receiveAttack(x,y) === -1) {
+            console.log("Coordinate already hit\nGo Again");
+            return;
+        }
+        player.gameBoard.receiveAttack(x,y);
+        switchPlayer();
+    }
+
+    return{getWinner, computerAttack, playerAttack};
 }
