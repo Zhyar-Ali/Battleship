@@ -1,4 +1,7 @@
+import { stdout } from "node:process";
 import { Player, Ship } from "./script.js";
+import readline from "node:readline";
+
 
 const getRandomNum = function() {
     const random = (min, max) => {
@@ -19,7 +22,6 @@ const game = function() {
 
     let currentPlayer = player;
 
-    //place ships for both players randomly
     placeAllShips(player);
     placeAllShips(computer);
 
@@ -63,11 +65,13 @@ const game = function() {
         }
         computer.gameBoard.receiveAttack(x,y);
         switchPlayer();
+        display(player)
     }
 
-     const computerAttack = () => {
-        let x = getRandomNum.rand(1,11);
-        let y = getRandomNum.rand(1,11);
+    const computerAttack = () => {
+        const rand = getRandomNum();
+        let x = rand.random(1,11);
+        let y = rand.random(1,11);
         if(currentPlayer !== computer) {
             throw new Error("It's not the computer's turn");
         }
@@ -78,7 +82,50 @@ const game = function() {
         }
         player.gameBoard.receiveAttack(x,y);
         switchPlayer();
+        display(computer);
     }
 
-    return{getWinner, computerAttack, playerAttack};
+    const gameOver = () => {
+        if(player.gameBoard.allShipSunk() || computer.gameBoard.allShipSunk()) {
+            return true;
+        }
+    }
+
+    const display = (playerType) => {
+    console.log(playerType.type);
+
+    console.log("    " + [...Array(10).keys()].map(n => String(n + 1).padStart(2, " ")).join(" "));
+
+    playerType.gameBoard.grid.forEach((row, i) => {
+        const rowDisplay = row.map(cell => {
+                if (cell === 0) return "·";
+                if (cell === "X") return "*";
+                return "■";
+            }).map(cell => cell.padStart(2, " ")).join(" ");
+        console.log(`${String(i + 1).padStart(2, " ")} ${rowDisplay}`);
+    });
+    console.log("----------");
+};
+
+    return{getWinner, computerAttack, playerAttack, display, gameOver};
 }
+
+// const rl = readline.createInterface({
+//     input: process.stdin,
+//     output: stdout,
+// });
+
+let g = game();
+while(!g.gameOver()) {
+    rl.question("give coordinates: ", (coor) => {
+        g.playerAttack(coor[0],coor[1]);
+        rl.close();
+    });
+    g.computerAttack();
+}
+// g.playerAttack(1,1);
+// g.computerAttack();
+// g.playerAttack(5,5);
+// g.computerAttack();
+
+//working fine, but have to make it a loop till game ends
