@@ -99,7 +99,7 @@ export const Gameboard = function() {
         return false;
     };
 
-    return {placeShip, receiveAttack, getMissedAttack, allShipSunk, grid};
+    return {placeShip, receiveAttack, getMissedAttack, allShipSunk, arrShip, grid};
 };
 
 export const Player = function(typeOfPlayer) {
