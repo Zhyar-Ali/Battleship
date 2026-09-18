@@ -28,4 +28,7 @@
 }
 .grids{
     border: 1px solid black;
+    display: grid;
+    align-items: center;
+    justify-items: center;
 }

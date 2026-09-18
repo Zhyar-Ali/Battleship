@@ -1,7 +1,4 @@
-import { stdout } from "node:process";
 import { Player, Ship } from "./script.js";
-import readline from "node:readline";
-
 
 const getRandomNum = function() {
     const random = (min, max) => {
@@ -13,8 +10,7 @@ const getRandomNum = function() {
     return {random};
 }
 
-const game = function() {
-    const ships = [Ship(5), Ship(4), Ship(3), Ship(3), Ship(2)];
+export const game = function() {
     const orientation = ["horizontal", "vertical"];
     const rand = getRandomNum();
     let player = Player("human");
@@ -26,6 +22,7 @@ const game = function() {
     placeAllShips(computer);
 
     function placeAllShips(typePlayer) {
+        const ships = [Ship(5), Ship(4), Ship(3), Ship(3), Ship(2)];
         while(typePlayer.gameBoard.arrShip.length < 5) {
             let shipToAdd = ships[rand.random(0,5)];
             if(!typePlayer.gameBoard.arrShip.includes(shipToAdd)) {
@@ -65,24 +62,34 @@ const game = function() {
         }
         computer.gameBoard.receiveAttack(x,y);
         switchPlayer();
-        display(player)
+        // display(player)
     }
 
     const computerAttack = () => {
         const rand = getRandomNum();
-        let x = rand.random(1,11);
-        let y = rand.random(1,11);
+        // let x = rand.random(1,11);
+        // let y = rand.random(1,11);
         if(currentPlayer !== computer) {
             throw new Error("It's not the computer's turn");
         }
-        
-        if(player.gameBoard.receiveAttack(x,y) === -1) {
-            console.log("Coordinate already hit\nGo Again");
-            return;
+        while (true) {
+            let x = rand.random(1,11);
+            let y = rand.random(1,11);
+            if(player.gameBoard.receiveAttack(x,y) === -1){
+                continue;
+            }else{
+                player.gameBoard.receiveAttack(x,y);
+                switchPlayer();
+                break;
+            }
         }
-        player.gameBoard.receiveAttack(x,y);
-        switchPlayer();
-        display(computer);
+        // if(player.gameBoard.receiveAttack(x,y) === -1) {
+        //     console.log("Coordinate already hit\nGo Again");
+        //     return;
+        // }
+        // player.gameBoard.receiveAttack(x,y);
+        // switchPlayer();
+        // display(computer);
     }
 
     const gameOver = () => {
@@ -105,27 +112,9 @@ const game = function() {
         console.log(`${String(i + 1).padStart(2, " ")} ${rowDisplay}`);
     });
     console.log("----------");
-};
+    };
 
-    return{getWinner, computerAttack, playerAttack, display, gameOver};
+    return{player, computer, getWinner, computerAttack, playerAttack, display, gameOver};
 }
-
-// const rl = readline.createInterface({
-//     input: process.stdin,
-//     output: stdout,
-// });
-
-let g = game();
-while(!g.gameOver()) {
-    rl.question("give coordinates: ", (coor) => {
-        g.playerAttack(coor[0],coor[1]);
-        rl.close();
-    });
-    g.computerAttack();
-}
-// g.playerAttack(1,1);
-// g.computerAttack();
-// g.playerAttack(5,5);
-// g.computerAttack();
 
 //working fine, but have to make it a loop till game ends
