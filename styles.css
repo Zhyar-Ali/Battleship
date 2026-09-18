@@ -32,3 +32,22 @@
     align-items: center;
     justify-items: center;
 }
+.winner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 3px solid black;
+    padding: 40px 70px;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 9999;
+}
+.restart{
+    font-size: 20px;
+    border: 2px solid rgb(57, 211, 57);
+    background-color: green;
+    color: rgb(206, 240, 197);
+}

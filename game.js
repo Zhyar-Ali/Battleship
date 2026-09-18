@@ -13,8 +13,8 @@ const getRandomNum = function() {
 export const game = function() {
     const orientation = ["horizontal", "vertical"];
     const rand = getRandomNum();
-    let player = Player("human");
-    let computer = Player("computer");
+    let player = Player("Human");
+    let computer = Player("Computer");
 
     let currentPlayer = player;
 
@@ -44,10 +44,10 @@ export const game = function() {
 
     const getWinner = () => {
         if(player.gameBoard.allShipSunk()) {
-            return computer;
+            return computer.type;
         }
         if(computer.gameBoard.allShipSunk()) {
-            return player;
+            return player.type;
         }
     }
 
@@ -62,13 +62,10 @@ export const game = function() {
         }
         computer.gameBoard.receiveAttack(x,y);
         switchPlayer();
-        // display(player)
     }
 
     const computerAttack = () => {
         const rand = getRandomNum();
-        // let x = rand.random(1,11);
-        // let y = rand.random(1,11);
         if(currentPlayer !== computer) {
             throw new Error("It's not the computer's turn");
         }
@@ -83,13 +80,6 @@ export const game = function() {
                 break;
             }
         }
-        // if(player.gameBoard.receiveAttack(x,y) === -1) {
-        //     console.log("Coordinate already hit\nGo Again");
-        //     return;
-        // }
-        // player.gameBoard.receiveAttack(x,y);
-        // switchPlayer();
-        // display(computer);
     }
 
     const gameOver = () => {
@@ -116,5 +106,3 @@ export const game = function() {
 
     return{player, computer, getWinner, computerAttack, playerAttack, display, gameOver};
 }
-
-//working fine, but have to make it a loop till game ends
