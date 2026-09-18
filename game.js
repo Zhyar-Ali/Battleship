@@ -51,20 +51,28 @@ export const game = function() {
         }
     }
 
-    const playerAttack = (x,y) => {
+    const playerAttack = (x,y) => {          
+        const boardTwo = document.querySelector(".boardTwo");
+        const cell = boardTwo.querySelector(`.grids[data-row="${x}"][data-col="${y}"]`);
         if(currentPlayer !== player) {
             throw new Error("It's not the player's turn");
         }
-        
-        if(computer.gameBoard.receiveAttack(x,y) === -1) {
+
+        let result = computer.gameBoard.receiveAttack(x,y);
+        if(result === -1) {
             console.log("Coordinate already hit\nGo Again");
             return;
         }
-        computer.gameBoard.receiveAttack(x,y);
+        if(result !== "miss") {
+            cell.style.backgroundColor = "green";
+        }else{
+            cell.style.backgroundColor = "red";
+        }
         switchPlayer();
     }
 
     const computerAttack = () => {
+        const boardOne = document.querySelector(".boardOne");
         const rand = getRandomNum();
         if(currentPlayer !== computer) {
             throw new Error("It's not the computer's turn");
@@ -72,13 +80,18 @@ export const game = function() {
         while (true) {
             let x = rand.random(1,11);
             let y = rand.random(1,11);
-            if(player.gameBoard.receiveAttack(x,y) === -1){
+            let result = player.gameBoard.receiveAttack(x,y);
+            if(result === -1){
                 continue;
-            }else{
-                player.gameBoard.receiveAttack(x,y);
-                switchPlayer();
-                break;
             }
+            const cell = boardOne.querySelector(`.grids[data-row="${x}"][data-col="${y}"]`);
+            if(result !== "miss") {
+                cell.style.backgroundColor = "green";
+            }else{
+                cell.style.backgroundColor = "red";
+            }
+            switchPlayer();
+            break;
         }
     }
 

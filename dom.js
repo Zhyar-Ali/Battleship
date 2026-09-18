@@ -41,6 +41,7 @@ function renderBoardcomp(gameBoard, domBoard) {
         row.forEach((cell,colIndex) => {  
             const domCell = cells[rowIndex*10+colIndex];
             domCell.textContent = "";
+
             if(cell === 0) {
                 domCell.textContent = "";
             }else if(cell === "X") {
@@ -91,6 +92,17 @@ boardTwo.addEventListener("click", (event) => {
             g = game();
             renderBoard(g.player.gameBoard, boardOne);
             renderBoardcomp(g.computer.gameBoard, boardTwo);
+
+            const cellsOne = boardOne.querySelectorAll(".grids");
+            const cellsTwo = boardTwo.querySelectorAll(".grids");
+
+            cellsTwo.forEach(cell => {
+                cell.style.backgroundColor = "";
+            });
+            cellsOne.forEach(cell => {
+                cell.style.backgroundColor = "";
+            });
+
         });
     }
 });

@@ -73,7 +73,7 @@ export const Gameboard = function() {
                 grid[x-1][y-1] = "X"
                 arrMissedCoor.push([x,y]);
                 missedAttack++;
-                return;
+                return "miss";
             }else{
                 return -1;
             }
