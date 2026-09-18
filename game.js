@@ -64,9 +64,9 @@ export const game = function() {
             return;
         }
         if(result !== "miss") {
-            cell.style.backgroundColor = "green";
+            cell.style.background = "linear-gradient(to right, #D0FF00, #00FF6A)";
         }else{
-            cell.style.backgroundColor = "red";
+            cell.style.background = "linear-gradient(to right, #ff0000, #ffae00)";
         }
         switchPlayer();
     }
@@ -86,9 +86,9 @@ export const game = function() {
             }
             const cell = boardOne.querySelector(`.grids[data-row="${x}"][data-col="${y}"]`);
             if(result !== "miss") {
-                cell.style.backgroundColor = "green";
+                cell.style.background = "linear-gradient(to right, #D0FF00, #00FF6A)";
             }else{
-                cell.style.backgroundColor = "red";
+                cell.style.background = "linear-gradient(to right, #ff0000, #ffae00)";
             }
             switchPlayer();
             break;

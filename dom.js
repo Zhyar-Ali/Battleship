@@ -97,10 +97,10 @@ boardTwo.addEventListener("click", (event) => {
             const cellsTwo = boardTwo.querySelectorAll(".grids");
 
             cellsTwo.forEach(cell => {
-                cell.style.backgroundColor = "";
+                cell.style.background = "";
             });
             cellsOne.forEach(cell => {
-                cell.style.backgroundColor = "";
+                cell.style.background = "";
             });
 
         });
